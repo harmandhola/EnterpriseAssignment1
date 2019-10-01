@@ -5,6 +5,7 @@ var HOST = '127.0.0.1';
 var restify = require('restify');
 
 var save = require('save')
+
 var productsSave = save('products')
 
 var server = restify.createServer();
