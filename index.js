@@ -25,6 +25,8 @@ server.get('/products', getAllProducts);
 // POST request
 server.post('/products', addNewProduct);
 
+server.del('/products', deleteAllProducts);
+
 
 // callback function mapped to GET request
 function getAllProducts(req, res, next) {
@@ -42,6 +44,16 @@ function addNewProduct(req, res, next) {
     productsSave.create(newProduct, function(err, product){
         // send 201 HTTP response code and created product object
         res.send(201, product);
+        next();
+    })
+}
+
+function deleteAllProducts(req, res, next) {
+    console.log("here");
+    productsSave.deleteMany({}, function(err, Products){
+        console.log("error"+ err);
+        // send 200 HTTP response code and array of found products
+        res.send(200, Products);
         next();
     })
 }
