@@ -52,3 +52,15 @@ function addNewProduct(req, res, next) {
         next();
     })
 }
+
+// callback function mapped to DELETE request
+function deleteAllProducts(req, res, next) {
+        console.log("Deleting all products");
+        productsSave.deleteMany({}, function(err, Products){
+            console.log("error"+ err);
+            // send 200 HTTP response code 
+            res.send(200, Products);
+            next();
+        })
+    }
+    
