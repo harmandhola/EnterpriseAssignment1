@@ -8,6 +8,9 @@ var save = require('save')
 
 var productsSave = save('products')
 
+var requestCounterGet = 0;
+var requestCounterPost = 0;
+
 var server = restify.createServer();
 
 // configure request body parser
@@ -30,7 +33,10 @@ server.del('/products', deleteAllProducts);
 
 // callback function mapped to GET request
 function getAllProducts(req, res, next) {
+    requestCounterGet++;
+    console.log("   Request counter: " +  requestCounterGet);
     productsSave.find({},null, function(err, foundProducts){
+        var requestCounterString = "======> Request Count: " + requestCounter + "\n======================================";
         // send 200 HTTP response code and array of found products
         res.send(200, foundProducts);
         next();
@@ -38,21 +44,24 @@ function getAllProducts(req, res, next) {
 }
 // callback function mapped to POST request
 function addNewProduct(req, res, next) {
+    requestCounterPost++;
+    console.log("   Request counter: " +  requestCounterPost);
     // json payload of the request
     var newProduct = req.body;
 
     productsSave.create(newProduct, function(err, product){
+        console.log("Creating new products")
         // send 201 HTTP response code and created product object
         res.send(201, product);
         next();
     })
 }
-
+// callback function mapped to DELETE request
 function deleteAllProducts(req, res, next) {
-    console.log("here");
+    console.log("Deleting all products");
     productsSave.deleteMany({}, function(err, Products){
         console.log("error"+ err);
-        // send 200 HTTP response code and array of found products
+        // send 200 HTTP response code 
         res.send(200, Products);
         next();
     })
