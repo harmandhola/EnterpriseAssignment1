@@ -19,7 +19,6 @@ server.use(restify.plugins.bodyParser({ mapParams: false }));
 // starting server
 server.listen(3009, function() {
   console.log('%s listening at %s', server.name, server.url);
-console.log('Endpoints:',server.get,server.post);
 });
 
 
